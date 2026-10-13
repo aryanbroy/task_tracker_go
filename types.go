@@ -3,11 +3,11 @@ package main
 import "time"
 
 type Task struct {
-	id          int
-	description string
-	status      Status
-	createdAt   time.Time
-	updatedAt   time.Time
+	Id          int       `json:"id"`
+	Description string    `json:"description"`
+	Status      Status    `json:"status"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
 type Status string
