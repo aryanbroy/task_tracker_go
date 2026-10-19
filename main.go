@@ -1,33 +1,36 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
-	"os"
+	"flag"
+	"fmt"
 	"time"
 )
 
+var fileName string = "taskData.json"
+
 func main() {
+
+	descPtr := flag.String("desc", "demo", "description of the task")
+	statusPtr := flag.String("status", string(Todo), "describe the status of the task, choose between todo, in-progress and done ")
+
+	flag.Parse()
+
+	fmt.Println("Description: ", *descPtr)
+	fmt.Println("Status: ", *statusPtr)
+
+	isValidStatus := IsValidStatus(Status(*statusPtr))
+	if !isValidStatus {
+		fmt.Println("Invalid status, choose from todo, in-progress and done ")
+		return
+	}
 
 	newTask := Task{
 		Id:          1,
-		Description: "demo 1",
-		Status:      Todo,
+		Description: *descPtr,
+		Status:      Status(*statusPtr),
 		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
 	}
 
-	file, err := os.Create("taskData.json")
-	if err != nil {
-		log.Fatalln("Error writing into json file: ", err)
-	}
-	defer file.Close()
-
-	encoder := json.NewEncoder(file)
-	encoder.SetIndent("", "  ")
-
-	err = encoder.Encode(newTask)
-	if err != nil {
-		log.Fatalln("Error encoding newTask: ", err)
-	}
+	AppendToJson(newTask)
 }
