@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"time"
 )
 
 var fileName string = "taskData.json"
@@ -24,13 +23,5 @@ func main() {
 		return
 	}
 
-	newTask := Task{
-		Id:          1,
-		Description: *descPtr,
-		Status:      Status(*statusPtr),
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
-	}
-
-	AppendToJson(newTask)
+	AddNewTask(*descPtr, Status(*statusPtr))
 }

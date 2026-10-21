@@ -1,44 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
-	"fmt"
-	"log"
 	"os"
+	"time"
 )
 
-func WriteToJson(fileName string, newTask []Task) {
-	file, err := os.Create("taskData.json")
-	if err != nil {
-		log.Fatalln("Error writing into json file: ", err)
-	}
-	defer file.Close()
-
-	encoder := json.NewEncoder(file)
-	encoder.SetIndent("", "  ")
-
-	err = encoder.Encode(newTask)
-	if err != nil {
-		log.Fatalln("Error encoding newTask: ", err)
-	}
-
-}
-
-func ReadJson(fileName string) []Task {
-	bytData, err := os.ReadFile(fileName)
-	if err != nil {
-		log.Fatalln("Error reading file: ", err)
-	}
-
-	tasks := []Task{}
-
-	json.Unmarshal(bytData, &tasks)
-	fmt.Println("Reading initial data: ", tasks)
-	return tasks
-}
-
-func AppendToJson(task Task) {
+func AddNewTask(description string, status Status) {
 
 	var initTasks []Task
 
@@ -46,14 +14,27 @@ func AppendToJson(task Task) {
 		initTasks = ReadJson(fileName)
 	}
 
-	newList := append(initTasks, task)
+	lastId := FindLastId(initTasks)
 
-	// dataBytes, err := json.Marshal(newList)
-	// if err != nil {
-	// 	log.Fatalln("Error marshaling data: ", err)
-	// }
+	newTask := Task{
+		Id:          lastId + 1,
+		Description: description,
+		Status:      status,
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
+	}
 
-	WriteToJson(fileName, newList)
+	AppendToJson(initTasks, newTask)
+
+}
+
+func FindLastId(tasks []Task) int {
+	var lastId int
+	for _, task := range tasks {
+		lastId = task.Id
+	}
+
+	return lastId
 }
 
 func IsValidStatus(s Status) bool {
