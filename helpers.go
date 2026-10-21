@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"time"
 )
@@ -26,6 +27,25 @@ func AddNewTask(description string, status Status) {
 
 	AppendToJson(initTasks, newTask)
 
+}
+
+func UpdateTask(taskId int, newDesc string) {
+	tasks := ReadJson(fileName)
+
+	counter := -1
+	for i := range tasks {
+		if tasks[i].Id == taskId {
+			tasks[i].Description = newDesc
+			counter = 1
+		}
+	}
+
+	if counter == -1 {
+		fmt.Println("No task with id: ", taskId, " exists")
+		return
+	}
+
+	WriteToJson(fileName, tasks)
 }
 
 func FindLastId(tasks []Task) int {
