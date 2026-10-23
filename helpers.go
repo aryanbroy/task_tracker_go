@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"slices"
 	"time"
@@ -86,6 +89,22 @@ func MarkDone(taskId int) {
 	}
 
 	WriteToJson(fileName, tasks)
+}
+
+func ListTasks() {
+	bytData, err := os.ReadFile(fileName)
+	if err != nil {
+		log.Fatalln("Error reading file: ", fileName)
+	}
+
+	var tasks bytes.Buffer
+
+	err = json.Indent(&tasks, bytData, "", " ")
+	if err != nil {
+		log.Fatalln("Error indenting: ", err)
+	}
+
+	fmt.Println(tasks.String())
 }
 
 func FindLastId(tasks []Task) int {

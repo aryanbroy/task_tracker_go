@@ -55,6 +55,8 @@ func main() {
 		}
 
 		MarkDone(idNum)
+	} else if funcToDo == "list" {
+		ListTasks()
 	}
 
 	// descPtr := flag.String("desc", "demo", "description of the task")
