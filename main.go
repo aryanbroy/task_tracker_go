@@ -35,6 +35,26 @@ func main() {
 			return
 		}
 		DeleteTask(idNum)
+	} else if funcToDo == "mark-in-progress" {
+		taskId := os.Args[2]
+
+		idNum, err := strconv.Atoi(taskId)
+		if err != nil {
+			fmt.Println("Error converting string to integer: ", err)
+			return
+		}
+
+		MarkInProgress(idNum)
+	} else if funcToDo == "mark-done" {
+		taskId := os.Args[2]
+
+		idNum, err := strconv.Atoi(taskId)
+		if err != nil {
+			fmt.Println("Error converting string to integer: ", err)
+			return
+		}
+
+		MarkDone(idNum)
 	}
 
 	// descPtr := flag.String("desc", "demo", "description of the task")

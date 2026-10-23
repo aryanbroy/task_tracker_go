@@ -62,6 +62,32 @@ func DeleteTask(taskId int) {
 	WriteToJson(fileName, tasks)
 }
 
+func MarkInProgress(taskId int) {
+	tasks := ReadJson(fileName)
+
+	for i, _ := range tasks {
+		if tasks[i].Id == taskId {
+			tasks[i].Status = InProgress
+			break
+		}
+	}
+
+	WriteToJson(fileName, tasks)
+}
+
+func MarkDone(taskId int) {
+	tasks := ReadJson(fileName)
+
+	for i, _ := range tasks {
+		if tasks[i].Id == taskId {
+			tasks[i].Status = Done
+			break
+		}
+	}
+
+	WriteToJson(fileName, tasks)
+}
+
 func FindLastId(tasks []Task) int {
 	var lastId int
 	for _, task := range tasks {
