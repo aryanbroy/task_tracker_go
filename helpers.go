@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"slices"
 	"time"
 )
 
@@ -43,6 +44,19 @@ func UpdateTask(taskId int, newDesc string) {
 	if counter == -1 {
 		fmt.Println("No task with id: ", taskId, " exists")
 		return
+	}
+
+	WriteToJson(fileName, tasks)
+}
+
+func DeleteTask(taskId int) {
+	tasks := ReadJson(fileName)
+
+	for i, _ := range tasks {
+		if tasks[i].Id == taskId {
+			tasks = slices.Delete(tasks, i, i+1)
+			break
+		}
 	}
 
 	WriteToJson(fileName, tasks)

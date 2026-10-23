@@ -26,6 +26,15 @@ func main() {
 			return
 		}
 		UpdateTask(idNum, newDesc)
+	} else if funcToDo == "delete" {
+		taskId := os.Args[2]
+
+		idNum, err := strconv.Atoi(taskId)
+		if err != nil {
+			fmt.Println("Error converting string to integer: ", err)
+			return
+		}
+		DeleteTask(idNum)
 	}
 
 	// descPtr := flag.String("desc", "demo", "description of the task")
