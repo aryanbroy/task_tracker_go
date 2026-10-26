@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func AddNewTask(description string, status Status) {
+func AddNewTask(description string, status Status) int {
 
 	var initTasks []Task
 
@@ -30,7 +30,7 @@ func AddNewTask(description string, status Status) {
 	}
 
 	AppendToJson(initTasks, newTask)
-
+	return newTask.Id
 }
 
 func UpdateTask(taskId int, newDesc string) {

@@ -11,11 +11,11 @@ var fileName string = "taskData.json"
 func main() {
 
 	funcToDo := os.Args[1]
-	fmt.Println("What to do?: ", funcToDo)
 
 	if funcToDo == "add" {
 		desc := os.Args[2]
-		AddNewTask(desc, Todo)
+		id := AddNewTask(desc, Todo)
+		fmt.Println("Task added successfully (ID: ", id, ")")
 	} else if funcToDo == "update" {
 		taskId := os.Args[2]
 		newDesc := os.Args[3]
@@ -26,6 +26,7 @@ func main() {
 			return
 		}
 		UpdateTask(idNum, newDesc)
+		fmt.Println("Task updated successfully")
 	} else if funcToDo == "delete" {
 		taskId := os.Args[2]
 
@@ -35,6 +36,7 @@ func main() {
 			return
 		}
 		DeleteTask(idNum)
+		fmt.Println("Task deleted")
 	} else if funcToDo == "mark-in-progress" {
 		taskId := os.Args[2]
 
@@ -45,6 +47,7 @@ func main() {
 		}
 
 		MarkInProgress(idNum)
+		fmt.Println("Done")
 	} else if funcToDo == "mark-done" {
 		taskId := os.Args[2]
 
@@ -55,6 +58,7 @@ func main() {
 		}
 
 		MarkDone(idNum)
+		fmt.Println("Done")
 	} else if funcToDo == "list" {
 		if len(os.Args) > 2 {
 			filter := os.Args[2]
