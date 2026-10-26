@@ -107,6 +107,25 @@ func ListTasks() {
 	fmt.Println(tasks.String())
 }
 
+func ListFilteredTasks(filter Status) {
+	tasks := ReadJson(fileName)
+
+	var filteredTasks []Task
+
+	for _, task := range tasks {
+		if task.Status == filter {
+			filteredTasks = append(filteredTasks, task)
+		}
+	}
+
+	jsonData, err := json.MarshalIndent(filteredTasks, "", " ")
+	if err != nil {
+		log.Fatalln("Error marshaling filteredTasks: ", err)
+	}
+
+	fmt.Println(string(jsonData))
+}
+
 func FindLastId(tasks []Task) int {
 	var lastId int
 	for _, task := range tasks {
