@@ -11,6 +11,8 @@ import (
 	"time"
 )
 
+// dummy commit 2
+
 func AddNewTask(description string, status Status) int {
 
 	var initTasks []Task
